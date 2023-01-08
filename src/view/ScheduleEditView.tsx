@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import {
   SafeAreaView,
@@ -6,25 +6,50 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Button,
   useColorScheme,
   View,
+  NativeSyntheticEvent,
+  TextInputKeyPressEventData,
+  TextInputEndEditingEventData,
 } from 'react-native';
+
 import { LogMode, WriteLog } from '../lib/WriteLog';
+
+import {InputTextArea} from '../parts/InputTextArea'
+import {InputDateArea} from '../parts/InputDateArea'
+import { ScheduleData } from '../data/ScheduleData';
+
+export interface ScheduledEditViewProps {
+	dataUUID:string
+}
 
 
 // スケジュール入力画面
-export const ScheduledEditView = (props: any) => {
+export const ScheduledEditView = (props: ScheduledEditViewProps) => {
 
-	WriteLog(`ScheduledEditVie レンダリング `, LogMode.d)
+	WriteLog(`ScheduledEditVie レンダリング dataUUID:${props.dataUUID}`, LogMode.d)
+
+	const [uuid, setUuid] = useState(props.dataUUID)
+
+	const scheData = useMemo(() => {
+		return new ScheduleData(props.dataUUID)
+	}, [props.dataUUID])
+
+	const didEndDate = (date: Date) => {
+		scheData.date = date
+	}
+
+	const didEndComment = (text:string) => {
+		scheData.comment = text
+	}
 
 	return (
 		<SafeAreaView style={styles.container}>
 			<TitleArea title={"スケジュール入力"}>				
 			</TitleArea>
-			<DateInput date={props.date}>
-			</DateInput>
-			<InputText text={props.comment}>
-			</InputText>
+			<InputDateArea caption={"日付"} date={scheData.date} style={styles.input} onEnd={didEndDate}/>
+			<InputTextArea caption={"内容"} text={scheData.comment} style={styles.input} onEnd={didEndComment}/>
 		</SafeAreaView>
 	)
 }
@@ -49,27 +74,17 @@ const DateInput = (props: any) => {
 
 	return (
 		<SafeAreaView>
-		</SafeAreaView>
-	)
-}
-
-// テキスト入力欄
-const InputText = (props: any) => {
-
-	const [_text, setText] = React.useState(props.text);
-
-	WriteLog(`InputText レンダリング text:${_text}`, LogMode.d)
-
-	return (
-		<SafeAreaView>
-			<TextInput
-				style={styles.input}
-				value={_text}
-				onChangeText={setText}
+			<Text>{props.caption}</Text>
+			{/* <button title='1' onClick={props.onClick}></button> */}
+			<Button
+				onPress={props.onClick}
+				title="1"
+				color="#841584"
 			/>
 		</SafeAreaView>
 	)
 }
+
 
 const styles = StyleSheet.create({
 	container: {

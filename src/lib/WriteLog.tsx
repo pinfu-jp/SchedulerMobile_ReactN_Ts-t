@@ -1,6 +1,7 @@
 // import fs from "fs";		// react-native で構築すると node.js の fs は直接は使えないのかな
 import * as reactFs from 'react-native-fs';
 import moment from "moment";
+import { useMemo } from 'react';
 
 const MAX_LOG_FILE_SIZE_MB = 1024
 
@@ -10,6 +11,16 @@ export enum LogMode {
 	w = 'warning',
 	e = 'error'
 }
+
+// TODO: カスタムフックでログ機能を提供したい！
+
+const useWriteLog = (path: string) => {
+
+	const _path = useMemo(() => {
+
+	}, [path])
+}
+
 
 // グローバル変数　ログファイルパス
 var g_logFilePath: string = ""
@@ -23,19 +34,35 @@ export const DefineLogFilePath = (path: string) => {
 // ログ出力
 export const WriteLog = (comment:string | null, mode: LogMode = LogMode.i) => {
 
-	let date = new Date();
-	let dateText = moment(date).format('YYYY.MM.DD HH:mm:ss')
-	const text = `${dateText} [${mode}] ${comment}`
+	let dateText = moment(new Date()).format('YYYY.MM.DD HH:mm:ss')
 	
 	// コンソールへ書き込み
-	console.debug(text)
+	_printConsole(mode, `${dateText} ${comment}`)
 
 	if (mode == LogMode.d) {
-		// TODO: リリース時は出さない
+		// TODO: リリース時はログファイルには出力しない
 	}
 
 	// ログファイルへ書き込み
-	_writeLogfile(g_logFilePath, text, MAX_LOG_FILE_SIZE_MB)
+	_writeLogfile(g_logFilePath, `${dateText} [${mode}] ${comment}`, MAX_LOG_FILE_SIZE_MB)
+}
+
+const _printConsole = (mode:LogMode, text:string) => {
+
+	switch(mode) {
+		case LogMode.d:
+			console.debug(text)
+			break
+		case LogMode.i:
+			console.info(text)
+			break
+		case LogMode.w:
+			console.warn(text)
+			break
+		case LogMode.e:
+			console.error(text)
+			break		
+	}
 }
 
 const _writeLogfile = (path: string, text:string, maxsizemb: number) => {
