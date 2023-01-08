@@ -14,7 +14,7 @@ import { LogMode, WriteLog } from '../lib/WriteLog';
 
 export interface InputTextAreaProps {
     text?: string;
-	caption: string;
+	title: string;
 	style: StyleProp<TextStyle>;
 	onEnd: (text: string) => void	
 }
@@ -45,7 +45,7 @@ export const InputTextArea = (props: InputTextAreaProps) => {
 
 	return (
 		<View>
-			<Text>{props.caption}</Text>
+			<Text>{props.title}</Text>
 			<TextInput
 				style={props.style}
 				value={_text}

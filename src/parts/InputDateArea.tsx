@@ -16,7 +16,7 @@ import { LogMode, WriteLog } from '../lib/WriteLog';
 
 export interface InputDateAreaProps {
     date?: Date;
-	caption: string;
+	title: string;
 	style: StyleProp<TextStyle>;
 	onEnd: (date: Date) => void	
 }
@@ -52,7 +52,7 @@ export const InputDateArea = (props: InputDateAreaProps) => {
 
 	return (
 		<View>
-			<Text>{props.caption}</Text>
+			<Text>{props.title}</Text>
 			<TextInput
 				style={props.style}
 				value={_text}
