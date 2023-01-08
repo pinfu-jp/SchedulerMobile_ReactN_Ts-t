@@ -13,7 +13,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { LogMode, WriteLog } from '../lib/WriteLog';
-import { useTextInputEvent } from './Hooks/TextInputEvent';
+import { useTextInputEvent } from './Hooks/TextInputHooks';
 
 export interface InputDateAreaProps {
     date?: Date;
@@ -25,7 +25,7 @@ export interface InputDateAreaProps {
 // 日付入力欄
 export const InputDateArea = (props: InputDateAreaProps) => {
 
-	const {_text, onTouchEnd, onEndEditing} = useTextInputEvent('InputDateArea', String(props.date))
+	const {_text, onTouchEnd, onChangeText, onEndEditing} = useTextInputEvent('InputDateArea', String(props.date))
 
 	const [_date, setDate] = useState(props.date)
 
@@ -42,6 +42,7 @@ export const InputDateArea = (props: InputDateAreaProps) => {
 				style={props.style}
 				value={_text}
 				onTouchEnd={onTouchEnd}
+				onChangeText={onChangeText}
 				onEndEditing={onEndEditing}
 			/>
 			<Button

@@ -2,17 +2,16 @@ import React, { useMemo, useState } from 'react';
 
 import {
 	Button,
-  GestureResponderEvent,
-  SafeAreaView,
-  StyleSheet,
-  Text,
+	GestureResponderEvent,
+	SafeAreaView,
+	StyleSheet,
 } from 'react-native';
 
 import { LogMode, WriteLog } from '../lib/WriteLog';
 
-import {InputTextArea} from '../parts/InputTextArea'
-import {InputDateArea} from '../parts/InputDateArea'
 import { ScheduleData } from '../data/ScheduleData';
+import { TitleArea } from '../parts/TitleArea';
+import { useScheCommentArea, useScheDateArea } from './Hooks/ScheduledEditHooks';
 
 export interface ScheduledEditViewProps {
 	dataUUID:string
@@ -30,35 +29,18 @@ export const ScheduledEditView = (props: ScheduledEditViewProps) => {
 		return new ScheduleData(props.dataUUID)
 	}, [props.dataUUID])
 
-	const didEndDate = (date: Date) => {
-		scheData.date = date
-	}
-
-	const didEndComment = (text:string) => {
-		scheData.comment = text
-	}
-
 	const onPressEnterBtn = (event: GestureResponderEvent) => {
 		WriteLog(`ScheduledEditView onPressBtn id:${event.nativeEvent.identifier}`, LogMode.d)
 	}
 
+	const {inputDateArea} = useScheDateArea(scheData, styles.input)
+	const {inputTextArea} = useScheCommentArea(scheData, styles.input)
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<TitleArea title={"スケジュール入力"}>				
-			</TitleArea>
-			<InputDateArea
-				title={"日付"} 
-				date={scheData.date}
-				style={styles.input} 
-				onEnd={didEndDate}
-			/>
-			<InputTextArea 
-				title={"内容"}
-				text={scheData.comment} 
-				style={styles.input} 
-				onEnd={didEndComment}
-			/>
+			<TitleArea title={"スケジュール入力"}/>				
+			{inputDateArea}
+			{inputTextArea}
 			<Button
 				title="登録"
 				color="#841500"
@@ -66,17 +48,6 @@ export const ScheduledEditView = (props: ScheduledEditViewProps) => {
 			/>
 		</SafeAreaView>
 	)
-}
-
-const TitleArea = (props: any) => {
-
-	return (
-		<SafeAreaView>
-	    	<Text style={styles.titleText}>
-				{props.title}
-      		</Text>
-		</SafeAreaView>
-	)	
 }
 
 const styles = StyleSheet.create({

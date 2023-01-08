@@ -8,7 +8,7 @@ import {
   StyleProp,
 } from 'react-native';
 import { LogMode, WriteLog } from '../lib/WriteLog';
-import { useTextInputEvent } from './Hooks/TextInputEvent';
+import { useTextInputEvent } from './Hooks/TextInputHooks';
 
 export interface InputTextAreaProps {
     text?: string;
