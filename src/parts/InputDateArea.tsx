@@ -13,6 +13,7 @@ import {
   TextStyle,
 } from 'react-native';
 import { LogMode, WriteLog } from '../lib/WriteLog';
+import { useTextInputEvent } from './Hooks/TextInputEvent';
 
 export interface InputDateAreaProps {
     date?: Date;
@@ -24,27 +25,11 @@ export interface InputDateAreaProps {
 // 日付入力欄
 export const InputDateArea = (props: InputDateAreaProps) => {
 
+	const {_text, onTouchEnd, onEndEditing} = useTextInputEvent('InputDateArea', String(props.date))
+
 	const [_date, setDate] = useState(props.date)
 
-	const [_text, setText] = React.useState(String(props.date));
-
 	WriteLog(`InputDateArea レンダリング date:${_date}`, LogMode.d)
-
-	const onKeyPress = (event: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
-		const key = event.nativeEvent.key
-		WriteLog(`InputDateArea onKeyPress key:${key}`, LogMode.d)
-	}
-
-	const onChangeText = (text:string) => {
-		WriteLog(`InputDateArea onChangeText text:${text}`, LogMode.d)
-		setText(text)
-	}
-
-	const onEndEditing = (event: NativeSyntheticEvent<TextInputEndEditingEventData>) => {
-		WriteLog(`InputDateArea onEndEditing text:${event.nativeEvent.text}`, LogMode.d)
-		// TODO: 入力値を得たい
-		props.onEnd(new Date)
-	}
 
 	const onPressBtn1 = (event: GestureResponderEvent) => {
 		WriteLog(`InputDateArea onPressBtn id:${event.nativeEvent.identifier}`, LogMode.d)
@@ -56,8 +41,7 @@ export const InputDateArea = (props: InputDateAreaProps) => {
 			<TextInput
 				style={props.style}
 				value={_text}
-				onKeyPress={onKeyPress}
-				onChangeText={onChangeText}
+				onTouchEnd={onTouchEnd}
 				onEndEditing={onEndEditing}
 			/>
 			<Button

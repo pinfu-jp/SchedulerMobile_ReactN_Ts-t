@@ -12,16 +12,6 @@ export enum LogMode {
 	e = 'error'
 }
 
-// TODO: カスタムフックでログ機能を提供したい！
-
-const useWriteLog = (path: string) => {
-
-	const _path = useMemo(() => {
-
-	}, [path])
-}
-
-
 // グローバル変数　ログファイルパス
 var g_logFilePath: string = ""
 
