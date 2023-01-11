@@ -7,7 +7,7 @@ export interface TitleAreaProps {
 }
 
 
-export const TitleArea = (props: any) => {
+export const TitleArea = (props: TitleAreaProps) => {
 	return (
 		<View>
 	    	<Text style={props.style}>

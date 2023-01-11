@@ -22,21 +22,14 @@ export interface InputTextAreaProps {
 // テキスト入力欄
 export const InputTextArea = (props: InputTextAreaProps) => {
 
-	const {_text, onTouchEnd, onKeyPress, onChangeText, onEndEditing} = useTextInputEvent('InputTextArea', props.text, props.onEnd)
+	const inputEvent = useTextInputEvent('InputTextArea', props.text, props.onEnd)
 	
-	WriteLog(`InputTextArea レンダリング text:${_text}`, LogMode.d)
+	WriteLog(`InputTextArea レンダリング text:${inputEvent._text}`, LogMode.d)
 
 	return (
 		<View>
 			<Text>{props.title}</Text>
-			<TextInput
-				style={props.style}
-				value={_text}
-				onTouchEnd={onTouchEnd}
-				onKeyPress={onKeyPress}
-				onChangeText={onChangeText}
-				onEndEditing={onEndEditing}
-			/>
+			<TextInput style={props.style}	{...inputEvent}/>
 		</View>
 	)
 }

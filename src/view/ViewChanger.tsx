@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 // import { useRouter } from "next/router";
 
 import {
@@ -31,9 +31,10 @@ export const ViewChanger = (props:any) => {
 
 	WriteLog(`ViewChanger レンダリング viewKind:${_viewKind}`, LogMode.d)
 
+	var content = <p>Empty</p> 
 	if (props.mode == ViewMode.InputSchedule) {
-		return <ScheduledEditView dataUUID={uuid}/>
-	} else {
-		return <p>Empty</p>
+		content = <ScheduledEditView dataUUID={uuid}/>
 	}
+
+	return content
 }

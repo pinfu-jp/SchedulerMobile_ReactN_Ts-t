@@ -11,7 +11,7 @@ export const useScheDateArea = (scheData:ScheduleData, style: StyleProp<TextStyl
 		scheData.date = date
 	}
 
-	const inputDateArea = useMemo(() => {
+	const inputArea = useMemo(() => {
 		return (
 			<InputDateArea
 				title={"日付"} 
@@ -22,7 +22,7 @@ export const useScheDateArea = (scheData:ScheduleData, style: StyleProp<TextStyl
 		)
 	}, [scheData.date])
 
-	return {inputDateArea}
+	return {inputArea}
 }
 
 export const useScheCommentArea = (scheData:ScheduleData, style:StyleProp<TextStyle>) => {
@@ -31,7 +31,7 @@ export const useScheCommentArea = (scheData:ScheduleData, style:StyleProp<TextSt
 		scheData.comment = text
 	}
 
-	const inputTextArea = useMemo(() => {
+	const inputArea = useMemo(() => {
 		return (
 			<InputTextArea 
 				title={"内容"}
@@ -42,5 +42,5 @@ export const useScheCommentArea = (scheData:ScheduleData, style:StyleProp<TextSt
 		)		
 	}, [scheData.comment])
 
-	return {inputTextArea}
+	return {inputArea}
 }

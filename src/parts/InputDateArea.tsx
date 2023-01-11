@@ -25,7 +25,7 @@ export interface InputDateAreaProps {
 // 日付入力欄
 export const InputDateArea = (props: InputDateAreaProps) => {
 
-	const {_text, onTouchEnd, onChangeText, onEndEditing} = useTextInputEvent('InputDateArea', String(props.date))
+	const inputEvent = useTextInputEvent('InputDateArea', String(props.date))
 
 	const [_date, setDate] = useState(props.date)
 
@@ -38,13 +38,7 @@ export const InputDateArea = (props: InputDateAreaProps) => {
 	return (
 		<View>
 			<Text>{props.title}</Text>
-			<TextInput
-				style={props.style}
-				value={_text}
-				onTouchEnd={onTouchEnd}
-				onChangeText={onChangeText}
-				onEndEditing={onEndEditing}
-			/>
+			<TextInput style={props.style} {...inputEvent}/>
 			<Button
 				title="1"
 				color="#841584"

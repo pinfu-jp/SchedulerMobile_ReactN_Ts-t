@@ -33,14 +33,14 @@ export const ScheduledEditView = (props: ScheduledEditViewProps) => {
 		WriteLog(`ScheduledEditView onPressBtn id:${event.nativeEvent.identifier}`, LogMode.d)
 	}
 
-	const {inputDateArea} = useScheDateArea(scheData, styles.input)
-	const {inputTextArea} = useScheCommentArea(scheData, styles.input)
+	const date = useScheDateArea(scheData, styles.input)
+	const comment = useScheCommentArea(scheData, styles.input)
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<TitleArea title={"スケジュール入力"}/>				
-			{inputDateArea}
-			{inputTextArea}
+			<TitleArea title={"スケジュール入力"} style={styles.titleText}/>				
+			{date.inputArea}
+			{comment.inputArea}
 			<Button
 				title="登録"
 				color="#841500"
