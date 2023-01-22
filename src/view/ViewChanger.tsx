@@ -1,24 +1,16 @@
 import React, { Component, useState } from 'react';
 // import { useRouter } from "next/router";
 
-import {
-  SafeAreaView,
-  TextInput,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
-
 import {ScheduledEditView} from "./ScheduleEditView"
 
 import { WriteLog, LogMode } from '../lib/WriteLog';
+import { ScheduleListView } from './ScheduleListView';
 // import { randomUUID } from 'crypto';
 
 export enum ViewMode {
 	InputSchedule,
-	ScheduleList
+	ScheduleList,
+	Setting
 }
 
 export const ViewChanger = (props:any) => {
@@ -34,6 +26,8 @@ export const ViewChanger = (props:any) => {
 	var content = <p>Empty</p> 
 	if (props.mode == ViewMode.InputSchedule) {
 		content = <ScheduledEditView dataUUID={uuid}/>
+	} else if (props.mode == ViewMode.ScheduleList) {
+		content = <ScheduleListView currentDataUUID={uuid}/>
 	}
 
 	return content
